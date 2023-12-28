@@ -7,9 +7,9 @@ export default function Features() {
         backgroundImage: "linear-gradient(43deg, #70c1ff  0%, #FFF 100%)",
       }}
     >
-      <div className="text-center px-40">
+      <div className="text-center xl:px-40 md:px-2">
         <h2 className="text-3xl font-bold mb-3">Features</h2>
-        <p className="text-lg text-gray-600 px-60">
+        <p className="text-lg text-gray-600  md:px-2 ">
           The main aim of creating FWR blocks is to help designers, developers
           and agencies create websites and web apps quickly and easily. Each and
           every block uses minimal custom styling and is based on the utility
