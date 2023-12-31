@@ -26,7 +26,8 @@
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
-    "**/*.tsx",
+    "**/*.tsx", 
+    "src/app/my-mindmap/Mindmap.tsx",
     ],
   "exclude": [
     "node_modules"

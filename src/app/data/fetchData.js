@@ -7,3 +7,14 @@ export const postMap = async (data) => {
     body: JSON.stringify({ data }),
   });
 };
+
+export const getAllMap = async () => {
+  const res = await fetch(`https://yqtzkj-8080.csb.app/listMap`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await res.json();
+  return data;
+};

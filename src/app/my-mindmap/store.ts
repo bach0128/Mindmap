@@ -34,7 +34,6 @@ import {
     edges: [
     ],
     onNodesChange: (changes: NodeChange[]) => {
-
       set({
         nodes: applyNodeChanges(changes, get().nodes),
       });
