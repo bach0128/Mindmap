@@ -1,4 +1,5 @@
 "use client"
+import { useState } from "react";
 import {useCallback, useRef} from "react"
 import ReactFlow, {
     Controls,
@@ -44,15 +45,17 @@ const selector = (state: RFState) => ({
     mindmap: MindMapEdge
   }
 
-export default function Flow({handleSetNodes, nodesData}) {
+export default function Flow({handleSetNodes, linkData}) {
     let { nodes, edges, onNodesChange, onEdgesChange, addChildNode } = useStore(
         selector,
         shallow,
       );
+    handleSetNodes(nodes)
+      
     const [nodess, setNodes] = useNodesState(nodes);
     const [edgess, setEdges] = useEdgesState(edges);
-    if (nodesData) {
-        nodes = nodesData
+    if (linkData) {
+        nodes = linkData
     }
       const connectingNodeId = useRef<string | null>(null);
       const store = useStoreApi();
@@ -121,7 +124,6 @@ export default function Flow({handleSetNodes, nodesData}) {
         },
         [nodes , edges]
       );
-    // handleSetNodes(nodes)
 
   return (
       <div style={{height: "600px", width: "auto", paddingTop: "40px"}}>

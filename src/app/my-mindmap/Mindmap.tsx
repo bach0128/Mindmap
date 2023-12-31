@@ -9,6 +9,7 @@ const { add } = mindmapSlice.actions;
 
 function MindMap() {
   //  let listMap = useSelector((state) => state.mindmap.listMap)
+  let linkData
   const [checkMap, setCheckMap] = useState(false);
   const [nodesData, setNodesData] = useState();
   const [listData, setListData] = useState([]);
@@ -22,7 +23,6 @@ function MindMap() {
     postMap(newMap);
     setListData([...listData, { data: newMap}]);
     setCheckMap(false);
-    setMapName("Mind map chưa có tên");
   };
   const handleDeleteMap =  (id, indexDelete) => {
      setListData(listData.filter((value, index) => index !== indexDelete))
@@ -37,10 +37,9 @@ function MindMap() {
 
   const handleSetNodes = (nodes) => {
     setNodesData(nodes);
-    console.log(nodes);
   };
   useEffect(() => {
-    getData();
+    getData()
   }, []);
   useEffect(() => {
 
@@ -60,7 +59,6 @@ function MindMap() {
           </button>
         </div>
       )}
-      {console.log(listData)}
 
       <div className="mb-10" key={10}>
         {!checkMap &&
@@ -69,12 +67,12 @@ function MindMap() {
               key={index}
               className="w-full h-10 flex px-28 items-center shadow-sm"
             >
-              <p>{id} - {index + 1 }</p>
               <p className="text-2xl mr-4"> {data.name} </p>
               <button
                 className="w-20 bg-green-600 rounded mx-2"
                 onClick={() => {
-                  handleSetNodes(data.list);
+                  linkData = data.list
+                  console.log(linkData);
                   setCheckMap(true);
                 }}
               >
@@ -129,7 +127,7 @@ function MindMap() {
               </button>
             </div>
           </div>
-          <Flow handleSetNodes={handleSetNodes} nodesData={nodesData} />
+          <Flow handleSetNodes={handleSetNodes} linkData={linkData} />
         </div>
       )}
     </>
