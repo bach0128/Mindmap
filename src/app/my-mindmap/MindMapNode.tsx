@@ -36,7 +36,7 @@ function MindMapNode({ id, data }: NodeProps<NodeData>) {
           ref={inputRef}
         />
       </div>
-
+      
       <Handle type="target" position={Position.Top} />
       <Handle type="source" position={Position.Bottom} />
     </>

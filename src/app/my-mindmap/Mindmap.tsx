@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import "reactflow/dist/style.css";
-import { postMap, getAllMap } from "../data/fetchData";
+import { postMap, getAllMap, deleteMap } from "../data/fetchData";
 import { useSelector, useDispatch } from "react-redux";
 import { mindmapSlice } from "../../redux/slice/mindmapSlice";
 import Flow from "./Flow";
@@ -19,12 +19,17 @@ function MindMap() {
       name: mapName,
       list: nodesData,
     };
-    // dispatch(add(newMap))
     postMap(newMap);
-    setListData([...listData, { data: newMap }]);
+    setListData([...listData, { data: newMap}]);
     setCheckMap(false);
     setMapName("Mind map chưa có tên");
   };
+  const handleDeleteMap =  (id, indexDelete) => {
+     setListData(listData.filter((value, index) => index !== indexDelete))
+    if (id) {
+      deleteMap(id)
+    } 
+  }
   const getData = async () => {
     const listDataFetch = await getAllMap();
     setListData(listDataFetch);
@@ -37,6 +42,9 @@ function MindMap() {
   useEffect(() => {
     getData();
   }, []);
+  useEffect(() => {
+
+  }, [listData])
   return (
     <>
       {!checkMap && (
@@ -54,13 +62,14 @@ function MindMap() {
       )}
       {console.log(listData)}
 
-      <div className="mb-10">
+      <div className="mb-10" key={10}>
         {!checkMap &&
-          listData?.map(({ data }, index) => (
+          listData?.map(({ data, id }, index) => (
             <div
               key={index}
               className="w-full h-10 flex px-28 items-center shadow-sm"
             >
+              <p>{id} - {index + 1 }</p>
               <p className="text-2xl mr-4"> {data.name} </p>
               <button
                 className="w-20 bg-green-600 rounded mx-2"
@@ -71,7 +80,9 @@ function MindMap() {
               >
                 Sửa
               </button>
-              <button className="w-20 bg-blue-600 rounded mx-2">Xóa</button>
+              <button className="w-20 bg-blue-600 rounded mx-2"
+                onClick={() => handleDeleteMap(id, index)}
+              >Xóa</button>
               <hr />
             </div>
           ))}

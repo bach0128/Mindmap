@@ -8,6 +8,12 @@ export const postMap = async (data) => {
   });
 };
 
+export const deleteMap = async (id) => {
+  const res = await fetch(`https://yqtzkj-8080.csb.app/listMap/${id}`, {
+    method: "DELETE",
+  });
+};
+
 export const getAllMap = async () => {
   const res = await fetch(`https://yqtzkj-8080.csb.app/listMap`, {
     method: "GET",

@@ -11,7 +11,12 @@ import ReactFlow, {
     NodeOrigin,
     ConnectionLineType,
     MiniMap,
-    Background
+    Background,
+    getIncomers,
+    getOutgoers,
+    getConnectedEdges,
+    useNodesState,
+  useEdgesState,
   } from 'reactflow';
   import { shallow } from 'zustand/shallow';
   import useStore, { RFState } from './store';
@@ -44,12 +49,11 @@ export default function Flow({handleSetNodes, nodesData}) {
         selector,
         shallow,
       );
-
+    const [nodess, setNodes] = useNodesState(nodes);
+    const [edgess, setEdges] = useEdgesState(edges);
     if (nodesData) {
         nodes = nodesData
     }
-
-
       const connectingNodeId = useRef<string | null>(null);
       const store = useStoreApi();
       const { screenToFlowPosition } = useReactFlow();
@@ -100,6 +104,23 @@ export default function Flow({handleSetNodes, nodesData}) {
         },
         [getChildNodePosition],
       );  
+      const onNodesDelete = useCallback(
+        (deleted) => { 
+          setEdges(
+            deleted.reduce((acc, node) => {
+                const incomers = getIncomers(node, nodes, edges);
+                const outgoers = getOutgoers(node, nodes, edges);
+                const connectedEdges = getConnectedEdges([node], edges);
+                const remainingEdges = acc.filter((edge) => !connectedEdges.includes(edge));
+                const createdEdges = incomers.flatMap(({ id: source }) =>
+                  outgoers.map(({ id: target }) => ({ id: `${source}->${target}`, source, target }))
+                );
+                return [...remainingEdges, ...createdEdges];
+            }, edges)
+          );
+        },
+        [nodes , edges]
+      );
     // handleSetNodes(nodes)
 
   return (
@@ -109,6 +130,7 @@ export default function Flow({handleSetNodes, nodesData}) {
         edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
+        onNodesDelete={onNodesDelete}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         onConnectStart={onConnectStart}

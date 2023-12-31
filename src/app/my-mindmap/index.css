@@ -44,8 +44,10 @@ body {
     border: 1px solid whitesmoke;
   }
 
-  
-  
+  .react-flow__node:nth-child(1).react-flow__handle.target {
+    background: red !important;
+  }
+
   .react-flow .react-flow__connectionline {
     z-index: 0;
   }
