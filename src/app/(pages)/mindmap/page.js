@@ -11,7 +11,7 @@ import Loading from "../../../utils/loading/loading";
 const { add } = mindmapSlice.actions;
 import Link from "next/link";
 
-function page({ children }) {
+function page() {
   const router = useRouter();
   // let listMap = useSelector((state) => state.mindmap.listMap);
   const [listMap, setListMap] = useState([]);
@@ -88,7 +88,6 @@ function page({ children }) {
               ))}
             </tbody>
           </table>
-          {/* <main>{children}</main> */}
         </div>
       )}
     </ReactFlowProvider>
