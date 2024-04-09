@@ -4,6 +4,7 @@ import Header from "./defaultLayout/Header";
 import SessionProvider from "./components/SessionProvider";
 import { getServerSession } from "next-auth";
 import Providers from "../redux/Providers";
+import { ReactFlowProvider } from "reactflow";
 
 // export const metadata = {
 //   title: 'Create Next App',

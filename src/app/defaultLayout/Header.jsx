@@ -65,17 +65,17 @@ export default function Header() {
               </Link>
             ))}
 
-            {session ? (
+            {session?.user ? (
               <>
                 <span className="text-xl mx-2 text-indigo-700">
                   hi,{session?.user?.name}
                 </span>
-                <Link
-                  href="/my-mindmap"
+                <a
+                  href="/mindmap"
                   className="mx-2 p-2 text-indigo-700 text-xl rounded hover:bg-indigo-200 "
                 >
                   mindmap
-                </Link>
+                </a>
                 <button
                   className="mx-2 p-2 text-xl text-indigo-700 rounded hover:bg-indigo-600 hover:text-white border border-indigo-700 "
                   onClick={() => signOut()}
@@ -97,7 +97,7 @@ export default function Header() {
                   className="mx-2 p-2 text-indigo-700 rounded hover:bg-indigo-600 hover:text-white border border-indigo-700 "
                   onClick={() => signIn()}
                 >
-                  Register
+                  Logout
                 </Link>
               </>
             )}

@@ -5,9 +5,22 @@
 
 body {
     font-family: cursive;
-    span {
+    width: 100%;
+   	height: 100%;
+   	/* overflow: hidden; */
+   	margin: 0;
+   	padding: 0;
+     span {
       margin: 8px 0;
     }
+}
+
+:root
+{
+	--duration: 1.5s;
+	--container-size: 250px;
+	--box-size: 33px;
+	--box-border-radius: 15%;
 }
 
 

@@ -9,7 +9,6 @@ export const mindmapSlice = createSlice({
   initialState,
   reducers: {
     add: (state, action) => {
-      console.log(action.payload);
       state.listMap.push(action.payload);
     },
   },
