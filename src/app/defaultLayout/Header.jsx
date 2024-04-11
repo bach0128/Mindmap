@@ -49,7 +49,7 @@ export default function Header() {
           {!showNav && (
             <div className="slogan">
               <Link
-                href="/pages/home"
+                href="/home"
                 className=" text-indigo-600 font-bold text-3xl"
               >
                 Mindmap Flow
