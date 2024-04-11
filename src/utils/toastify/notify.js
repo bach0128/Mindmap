@@ -1,9 +1,9 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const notify = (content, click = null, method = null) => {
+const notify = (status, content, click = null, method = null) => {
   if (!click) {
-    return toast(`${content}`, {
+    return toast[status](`${content}`, {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
@@ -14,7 +14,7 @@ const notify = (content, click = null, method = null) => {
       theme: "light",
     });
   } else {
-    return toast(`${content}`, {
+    return toast[status](`${content}`, {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,

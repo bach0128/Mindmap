@@ -10,13 +10,17 @@ body {
    	/* overflow: hidden; */
    	margin: 0;
    	padding: 0;
-     span {
+    span {
       margin: 8px 0;
     }
+	
 }
 
 :root
 {
+	scroll-behavior: smooth;
+	scrollbar-width: 10px;
+	scroll-snap-type: mandatory;
 	--duration: 1.5s;
 	--container-size: 250px;
 	--box-size: 33px;

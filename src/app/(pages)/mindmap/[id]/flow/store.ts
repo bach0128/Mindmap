@@ -11,6 +11,7 @@ import {
   } from 'reactflow';
   // import { create } from 'zustand';
   import { createWithEqualityFn } from 'zustand/traditional';
+  import { ReactFlowActions } from 'reactflow';
   
   import { nanoid } from 'nanoid/non-secure';
   
@@ -21,10 +22,8 @@ import {
     onEdgesChange: OnEdgesChange;
     addChildNode: (parentNode: Node, position: XYPosition) => void;
     updateNodeLabel: (nodeId: string, label: string) => void;
-    setNodes: (payload: Node[] | ((nodes: Node[]) => Node[])) => void;
-    setEdges: (payload: Edge[] | ((edges: Edge[]) => Edge[])) => void;
   };
-  
+
   const useStore = createWithEqualityFn<RFState>((set, get) => ({
     nodes: [
       {
@@ -36,12 +35,6 @@ import {
     ],
     edges: [
     ],
-    setNodes: (dataNodes: Node[] | ((nodes: Node[]) => Node[])) => {
-      set({ nodes: [...get().nodes, ...dataNodes] });
-    },
-    setEdges: (dataEdges: Edge[] | ((edges: Edge[]) => Edge[])) => {
-      set({ edges: [...get().edges, ...dataEdges] });
-    },
     
     onNodesChange: (changes: NodeChange[]) => {
       set({

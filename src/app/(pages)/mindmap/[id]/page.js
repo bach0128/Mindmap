@@ -1,5 +1,5 @@
 "use client";
-import FlowWithProvider from "./flow/index";
+import FlowWithProvider from "./flow";
 import { useState, useEffect, Fragment } from "react";
 import { postMap, deleteMap, getMap } from "../../../data/fetchData";
 import "./flow.css";
@@ -14,14 +14,19 @@ function page(props) {
   const [dataId, setDataId] = useState({});
   let dataNew = {};
   const setDataMap = function (nodes, edges) {
-    dataNew = { nodes, edges, name };
+    const curDate = new Date();
+    var curDay = curDate.getDate();
+    var curMonth = curDate.getMonth() + 1;
+    var curYear = curDate.getFullYear();
+    const created_at = curYear + "/" + curMonth + "/" + curDay;
+    dataNew = { nodes, edges, name, created_at };
   };
   const addNew = async () => {
     const _id = await nanoid();
     dataNew = { ...dataNew, _id };
     const res = await postMap(dataNew);
     if (res.ok) {
-      notify("Tạo mới thành công!");
+      notify("success", "Tạo mới thành công!");
       router.push("/mindmap");
     }
   };
@@ -57,19 +62,29 @@ function page(props) {
             }}
             value={name}
           />
-          <button
-            type="button"
-            className="bg-green-400 border py-2 px-4 rounded-xl text-gray-800 hover:bg-green-500"
-            onClick={(e) => {
-              e.stopPropagation();
-              addNew();
-            }}
-          >
-            Save
-          </button>
+          {!Number(+id) ? (
+            <button
+              type="button"
+              className="bg-green-400 border py-2 px-4 rounded-xl text-gray-800 hover:bg-green-500"
+              onClick={(e) => {
+                e.stopPropagation();
+                addNew();
+              }}
+            >
+              Save
+            </button>
+          ) : (
+            <a
+              className="bg-green-400 border py-2 px-4 rounded-xl text-gray-800 hover:bg-green-500"
+              href="/mindmap"
+            >
+              Back
+            </a>
+          )}
         </div>
       </div>
-      <FlowWithProvider setdata={setDataMap} data={dataId} />
+
+      <FlowWithProvider save={setDataMap} data={dataId} />
     </Fragment>
   );
 }

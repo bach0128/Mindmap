@@ -15,7 +15,11 @@ export const postMap = async (data) => {
 export const deleteMap = async (id) => {
   const res = await fetch(`https://yqtzkj-8080.csb.app/listMap/${id}`, {
     method: "DELETE",
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
   });
+  return res;
 };
 
 export const getAllMap = async () => {
@@ -23,6 +27,7 @@ export const getAllMap = async () => {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
     },
   });
   const data = await res.json();
@@ -34,6 +39,7 @@ export const getMap = async (id) => {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
     },
   });
   const data = await res.json();

@@ -4,7 +4,7 @@ import Header from "./defaultLayout/Header";
 import SessionProvider from "./components/SessionProvider";
 import { getServerSession } from "next-auth";
 import Providers from "../redux/Providers";
-import { ReactFlowProvider } from "reactflow";
+import { ToastContainer } from "react-toastify";
 
 // export const metadata = {
 //   title: 'Create Next App',
@@ -14,7 +14,7 @@ import { ReactFlowProvider } from "reactflow";
 export default async function RootLayout({ children }) {
   const session = await getServerSession();
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth focus:scroll-auto scroll-m-3">
       <body>
         <Providers>
           <SessionProvider>
@@ -23,6 +23,8 @@ export default async function RootLayout({ children }) {
             <Footer />
           </SessionProvider>
         </Providers>
+
+        <ToastContainer />
       </body>
     </html>
   );
