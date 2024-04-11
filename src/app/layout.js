@@ -23,7 +23,6 @@ export default async function RootLayout({ children }) {
             <Footer />
           </SessionProvider>
         </Providers>
-
         <ToastContainer />
       </body>
     </html>
