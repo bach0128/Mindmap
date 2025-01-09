@@ -6,14 +6,15 @@ import "./flow.css";
 import { nanoid } from "nanoid";
 import notify from "../../../../utils/toastify/notify";
 import { useRouter } from "next/navigation";
+import { EdgeData, MapDto, NodeData } from "@/app/interface/map";
 
-function page(props) {
+function page(props: any) {
   const { id } = props.params;
   const router = useRouter();
   const [name, setName] = useState("Mindmap no name");
   const [dataId, setDataId] = useState({});
   let dataNew = {};
-  const setDataMap = function (nodes, edges) {
+  const setDataMap = function (nodes: NodeData, edges: EdgeData) {
     const curDate = new Date();
     var curDay = curDate.getDate();
     var curMonth = curDate.getMonth() + 1;
@@ -22,15 +23,17 @@ function page(props) {
     dataNew = { nodes, edges, name, created_at };
   };
   const addNew = async () => {
-    const _id = await nanoid();
-    dataNew = { ...dataNew, _id };
-    const res = await postMap(dataNew);
-    if (res.ok) {
+    const _id = nanoid();
+    const createNewMap = { ...dataNew, _id: _id } as MapDto;
+    const res = await postMap(createNewMap);
+    console.log(res);
+
+    if (res.status == 201) {
       notify("success", "Tạo mới thành công!");
       router.push("/mindmap");
     }
   };
-  const setMapId = async (id) => {
+  const setMapId = async (id: string) => {
     if (Number(+id)) {
       const data = await getMap(id);
       if (data) {

@@ -1,7 +1,8 @@
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+import { SessionStrategy } from "next-auth";
 
-// import CredentialsProvider from "next-auth/providers/credentials";
+const typeSession: SessionStrategy = "jwt";
 
 const options = {
   providers: [
@@ -15,9 +16,20 @@ const options = {
     }),
   ],
   session: {
-    strategy: "jwt",
+    strategy: typeSession,
+  },
+  callbacks: {
+    async jwt({ token, account }) {
+      if (account) {
+        token.accessToken = account.access_token;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      session.accessToken = token.accessToken;
+      return session;
+    },
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
-
 export default options;

@@ -13,7 +13,7 @@ import notify from "../../../utils/toastify/notify";
 
 const { add } = mindmapSlice.actions;
 
-function page() {
+function MindMap() {
   const router = useRouter();
   // let listMap = useSelector((state) => state.mindmap.listMap);
   const [listMap, setListMap] = useState([]);
@@ -34,12 +34,11 @@ function page() {
     router.push(`/mindmap/create`);
   };
 
-  const handleEdit = async (id) => {
+  const handleEdit = async (id: string) => {
     router.push(`/mindmap/${id}`);
   };
 
-  const handleDelete = async (id, index) => {
-    // confirm(`Are you sure you want to delete mindmap`)
+  const handleDelete = async (id: string, index: number) => {
     notify("warn", "Xác nhận xóa mindmap?", true, () => {
       delMap(id, index);
     });
@@ -59,7 +58,6 @@ function page() {
         <Loading />
       ) : (
         <div className="flow">
-          {console.log(listMap)}
           <button
             className="btn bg-blue-500 p-3 border rounded-xl mb-3 hover:bg-blue-400"
             onClick={(e) => {
@@ -82,40 +80,43 @@ function page() {
               </tr>
             </thead>
             <tbody>
-              {listMap?.map(({ name, id, created_at }, index) => (
-                <tr
-                  className="p-4 rounded-md border border-slate-300 mb-2"
-                  key={id}
-                >
-                  <td className="border border-slate-400 border-r-2 w-10">
-                    {index + 1}
-                  </td>
-                  <td className="border border-slate-400 border-r-2">{name}</td>
-                  <td className="border border-slate-400 border-r-2">
-                    {created_at}
-                  </td>
-                  <td className="border border-slate-400 border-r-2 px-2 flex items-center justify-center">
-                    <button
-                      className="p-1 mr-2 bg-green-400 "
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleEdit(id);
-                      }}
-                    >
-                      <FiEdit />
-                    </button>
-                    <button
-                      className="p-1 mr-2 bg-red-400"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDelete(id, index);
-                      }}
-                    >
-                      <AiOutlineDelete />
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {listMap.length > 0 &&
+                listMap?.map(({ name, id, created_at }, index) => (
+                  <tr
+                    className="p-4 rounded-md border border-slate-300 mb-2"
+                    key={id}
+                  >
+                    <td className="border border-slate-400 border-r-2 w-10">
+                      {index + 1}
+                    </td>
+                    <td className="border border-slate-400 border-r-2">
+                      {name}
+                    </td>
+                    <td className="border border-slate-400 border-r-2">
+                      {created_at}
+                    </td>
+                    <td className="border border-slate-400 border-r-2 px-2 flex items-center justify-center">
+                      <button
+                        className="p-1 mr-2 bg-green-400 "
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleEdit(id);
+                        }}
+                      >
+                        <FiEdit />
+                      </button>
+                      <button
+                        className="p-1 mr-2 bg-red-400"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDelete(id, index);
+                        }}
+                      >
+                        <AiOutlineDelete />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
@@ -124,4 +125,4 @@ function page() {
   );
 }
 
-export default page;
+export default MindMap;

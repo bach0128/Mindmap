@@ -1,10 +1,7 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -20,18 +17,19 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "baseUrl": ".", // This points to the root of the project
+    "paths": {
+      "@/*": ["src/*"] // Alias '@' maps to 'src' folder
+    }
   },
   "include": [
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
-    "**/*.tsx", 
-    "src/app/my-mindmap/Mindmap.tsx", "src/app/(pages)/mindmap/[id]/flow/index.tsx", "src/app/api/auth/[...nextauth]/route.js",
-    ],
-  "exclude": [
-    "node_modules"
-  ]
+    "**/*.tsx",
+    "src/app/api/auth/[...nextauth]/route.ts",
+    "next.config.mjs"
+  ],
+  "exclude": ["node_modules"]
 }
-
-// "src/app/my-mindmap/Mindmap.jsx", "src/app/my-mindmap/store.js"
