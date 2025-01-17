@@ -1,10 +1,12 @@
+import { Node, Edge } from "@xyflow/react";
+
 export interface MapDto {
-  nodes: NodeData[];
-  edges: EdgeData[];
+  nodes: Node[];
+  edges: Edge[];
   name: string;
-  created_at: string;
-  target: string;
-  _id: string;
+  created_at?: string;
+  updated_at?: string;
+  id: string;
 }
 
 export interface NodeData {
@@ -13,6 +15,7 @@ export interface NodeData {
   data: {
     label: string;
   };
+  measured: MeasuredType;
   position: PositionType;
   width: number;
   height: number;
@@ -30,4 +33,9 @@ export interface EdgeData {
 type PositionType = {
   x: number;
   y: number;
+};
+
+type MeasuredType = {
+  width: number;
+  height: number;
 };

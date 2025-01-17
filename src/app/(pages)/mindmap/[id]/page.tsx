@@ -1,94 +1,72 @@
 "use client";
+import Loading from "@/app/components/loading";
+import { MapDto } from "@/app/interface/map";
+import { getMapDetail } from "@/app/server/fetchData";
+import notify from "@/utils/toastify/notify";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import FlowWithProvider from "./flow";
-import { useState, useEffect, Fragment } from "react";
-import { postMap, deleteMap, getMap } from "../../../data/fetchData";
-import "./flow.css";
-import { nanoid } from "nanoid";
-import notify from "../../../../utils/toastify/notify";
-import { useRouter } from "next/navigation";
-import { EdgeData, MapDto, NodeData } from "@/app/interface/map";
+import { Node, Edge } from "@xyflow/react";
 
-function page(props: any) {
-  const { id } = props.params;
+function page() {
   const router = useRouter();
-  const [name, setName] = useState("Mindmap no name");
-  const [dataId, setDataId] = useState({});
-  let dataNew = {};
-  const setDataMap = function (nodes: NodeData, edges: EdgeData) {
-    const curDate = new Date();
-    var curDay = curDate.getDate();
-    var curMonth = curDate.getMonth() + 1;
-    var curYear = curDate.getFullYear();
-    const created_at = curYear + "/" + curMonth + "/" + curDay;
-    dataNew = { nodes, edges, name, created_at };
-  };
-  const addNew = async () => {
-    const _id = nanoid();
-    const createNewMap = { ...dataNew, _id: _id } as MapDto;
-    const res = await postMap(createNewMap);
-    console.log(res);
-
-    if (res.status == 201) {
-      notify("success", "Tạo mới thành công!");
-      router.push("/mindmap");
-    }
-  };
-  const setMapId = async (id: string) => {
-    if (Number(+id)) {
-      const data = await getMap(id);
-      if (data) {
-        setName(data.name);
-        setDataId(data);
-      } else {
-        return false;
-      }
-    }
-  };
-
+  const { id } = useParams();
+  const mapId = Array.isArray(id) ? id[0] : id;
+  const [loading, setLoading] = useState<boolean>(false);
+  const [mapDetail, setMapDetail] = useState<MapDto>(undefined);
+  const [nodes, setNodes] = useState<Node[]>([]);
+  const [edges, setEdges] = useState<Edge[]>([]);
   useEffect(() => {
-    setMapId(id);
-  }, []);
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const dataMap = await getMapDetail(mapId ?? "");
+        setMapDetail(dataMap.data);
+      } catch (error) {
+        notify("error", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [mapId]);
 
   return (
-    <Fragment>
-      <div className="p-2 mt-4">
-        <div className="flex justify-between mx-10 min-h-[600]">
-          <input
-            placeholder="Mindmap name"
-            type="text"
-            className="bg-gray-200 p-2"
-            autoFocus
-            onChange={(e) => {
-              if (e.target.value) {
-                setName(e.target.value);
-              } else setName("Mindmap no name");
-            }}
-            value={name}
-          />
-          {!Number(+id) ? (
-            <button
-              type="button"
-              className="bg-green-400 border py-2 px-4 rounded-xl text-gray-800 hover:bg-green-500"
-              onClick={(e) => {
-                e.stopPropagation();
-                addNew();
-              }}
-            >
-              Save
+    <>
+      {loading && <Loading />}
+      <div className="px-10 py-3">
+        <div className="flex items-center justify-between">
+          <div className="flex flex-col">
+            <label htmlFor="name">Map title</label>
+            <input
+              id="name"
+              type="text"
+              defaultValue={mapDetail?.name}
+              className="border p-2 max-w-[400px] rounded border-gray-400 mt-2"
+            />
+          </div>
+          <div>
+            <button className="bg-green-400 border py-2 px-4 rounded-xl text-gray-800 hover:bg-green-500">
+              Update
             </button>
-          ) : (
-            <a
-              className="bg-green-400 border py-2 px-4 rounded-xl text-gray-800 hover:bg-green-500"
-              href="/mindmap"
+            <button
+              className="bg-blue-400 border py-2 px-4 rounded-xl text-gray-800 hover:bg-blue-500"
+              onClick={() => router.back()}
             >
-              Back
-            </a>
-          )}
+              Cancel
+            </button>
+          </div>
+        </div>
+        <div className="h-[800px]">
+          <FlowWithProvider
+            saveNodes={setNodes}
+            saveEdges={setEdges}
+            initialData={mapDetail}
+          />
         </div>
       </div>
-
-      <FlowWithProvider save={setDataMap} data={dataId} />
-    </Fragment>
+      ;
+    </>
   );
 }
 

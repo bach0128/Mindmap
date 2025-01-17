@@ -18,9 +18,9 @@
         "name": "next"
       }
     ],
-    "baseUrl": ".", // This points to the root of the project
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"] // Alias '@' maps to 'src' folder
+      "@/*": ["src/*"]
     }
   },
   "include": [

@@ -1,7 +1,6 @@
 import React from "react";
 import MindMap from ".";
-function Index() {
+function page() {
   return <MindMap />;
 }
-
-export default Index;
+export default page;

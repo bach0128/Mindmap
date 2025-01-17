@@ -5,8 +5,6 @@ type Props = {
   children?: ReactNode;
 };
 
-const Index: React.FC<Props> = ({ children }) => {
+export default ({ children }: Props) => {
   return <div>{children}</div>;
 };
-
-export default Index;

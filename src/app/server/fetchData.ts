@@ -5,12 +5,13 @@ const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
   },
 });
 
 export const postMap = async (data: MapDto) => {
   try {
-    const res = await axiosInstance.post("/listMap", { newMap: data });
+    const res = await axiosInstance.post("/maps", { data });
     return res;
   } catch (error) {
     console.error("Error posting map:", error);
@@ -20,7 +21,7 @@ export const postMap = async (data: MapDto) => {
 
 export const deleteMap = async (id: string) => {
   try {
-    const res = await axiosInstance.delete(`/listMap/${id}`);
+    const res = await axiosInstance.delete(`/maps/${id}`);
     return res;
   } catch (error) {
     console.error("Error deleting map:", error);
@@ -28,19 +29,19 @@ export const deleteMap = async (id: string) => {
   }
 };
 
-export const getAllMap = async () => {
+export const getAllMap = async (): Promise<MapDto[]> => {
   try {
-    const res = await axiosInstance.get("/listMap");
-    return res.data;
+    const res = await axiosInstance.get("/maps");
+    return res.data as MapDto[];
   } catch (error) {
     console.error("Error fetching all maps:", error);
     throw error;
   }
 };
 
-export const getMap = async (id: string) => {
+export const getMapDetail = async (id: string): Promise<{ data: MapDto }> => {
   try {
-    const res = await axiosInstance.get(`/listMap/${id}`);
+    const res = await axiosInstance.get(`/maps/${id}`);
     return res.data;
   } catch (error) {
     console.error("Error fetching map:", error);
@@ -50,7 +51,7 @@ export const getMap = async (id: string) => {
 
 export const deleteAllMap = async () => {
   try {
-    const res = await axiosInstance.delete("/listMap");
+    const res = await axiosInstance.delete("/maps");
     return res;
   } catch (error) {
     console.error("Error deleting all maps:", error);

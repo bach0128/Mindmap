@@ -1,7 +1,12 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const notify = (status, content, click = null, method = null) => {
+const notify = (
+  status: string,
+  content: string,
+  click = null,
+  method = null
+) => {
   if (!click) {
     return toast[status](`${content}`, {
       position: "top-right",
