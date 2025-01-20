@@ -1,6 +1,10 @@
 import axios from "axios";
 import { MapDto } from "../interface/map";
 
+interface MapRequest {
+  data: MapDto;
+}
+
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
@@ -12,6 +16,16 @@ const axiosInstance = axios.create({
 export const postMap = async (data: MapDto) => {
   try {
     const res = await axiosInstance.post("/maps", { data });
+    return res;
+  } catch (error) {
+    console.error("Error posting map:", error);
+    throw error;
+  }
+};
+
+export const updateMap = async (id: string, data: MapDto) => {
+  try {
+    const res = await axiosInstance.patch(`/maps/${id}`, { data });
     return res;
   } catch (error) {
     console.error("Error posting map:", error);
@@ -39,9 +53,9 @@ export const getAllMap = async (): Promise<MapDto[]> => {
   }
 };
 
-export const getMapDetail = async (id: string): Promise<{ data: MapDto }> => {
+export const getMapDetail = async (id: string): Promise<any> => {
   try {
-    const res = await axiosInstance.get(`/maps/${id}`);
+    const res: MapRequest = await axiosInstance.get(`/maps/${id}`);
     return res.data;
   } catch (error) {
     console.error("Error fetching map:", error);

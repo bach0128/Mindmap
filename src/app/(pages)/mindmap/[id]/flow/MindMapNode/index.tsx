@@ -1,10 +1,14 @@
 import { useCallback } from "react";
 import { Handle, Position } from "@xyflow/react";
 
-function MindMapNode({ data }) {
-  const onChange = useCallback((evt) => {
-    console.log(evt.target.value);
-  }, []);
+function MindMapNode({ id, data, onNodeLabelChange }) {
+  const onChange = useCallback(
+    (evt) => {
+      const newLabel = evt.target.value;
+      onNodeLabelChange(id, newLabel);
+    },
+    [data.id, onNodeLabelChange]
+  );
 
   return (
     <>

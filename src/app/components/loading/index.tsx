@@ -44,7 +44,7 @@ export default function Loading({
     defaultConfig.bgColor = bgColor;
   }
   return (
-    <div className="w-screen h-screen fixed inset-0 z-20">
+    <div className="w-screen h-screen inset-0 z-20">
       <div className="bg-gray-400 opacity-50 w-screen h-screen fixed inset-0 z-50"></div>
       <div
         className={classNames(

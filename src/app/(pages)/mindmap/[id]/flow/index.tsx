@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import {
   ReactFlow,
   Controls,
@@ -15,6 +15,9 @@ import {
   addEdge,
   Node,
   Edge,
+  getIncomers,
+  getOutgoers,
+  getConnectedEdges,
 } from "@xyflow/react";
 import MindMapNode from "./MindMapNode";
 import MindMapEdge from "./MindMapEdge";
@@ -35,10 +38,6 @@ const initialNodes: Node[] = [
     position: { x: 0, y: 0 },
   },
 ];
-
-const nodeTypes = {
-  mindmap: MindMapNode,
-};
 
 const edgeTypes = {
   mindmap: MindMapEdge,
@@ -79,12 +78,31 @@ export function Flow({
     }
   }, [initialData]);
 
+  const onNodeLabelChange = (nodeId, newLabel) => {
+    setNodes((nds) =>
+      nds.map((node) =>
+        node.id === nodeId
+          ? { ...node, data: { ...node.data, label: newLabel } }
+          : node
+      )
+    );
+  };
+
+  const nodeTypes = useMemo(
+    () => ({
+      mindmap: (props) => (
+        <MindMapNode {...props} onNodeLabelChange={onNodeLabelChange} />
+      ),
+    }),
+    []
+  );
+
   const onConnectEnd = useCallback(
     (event, connectionState) => {
       // when a connection is dropped on the pane it's not valid
       if (!connectionState.isValid) {
         // we need to remove the wrapper bounds, in order to get the correct position
-        const id = uuidv1();
+        const id = uuidv1().split("-")[0].slice(0, 5);
         const { clientX, clientY } =
           "changedTouches" in event ? event.changedTouches[0] : event;
         const newNode = {
@@ -95,7 +113,7 @@ export function Flow({
             y: clientY,
           }),
           data: { label: `Node ${id}` },
-          origin: [0.5, 0.0],
+          origin: [0.5, 0.0] as [number, number],
         };
 
         setNodes((nds) => nds.concat(newNode));
@@ -107,7 +125,32 @@ export function Flow({
     [screenToFlowPosition]
   );
 
-  console.log(nodes);
+  const onNodesDelete = useCallback(
+    (deleted) => {
+      setEdges(
+        deleted.reduce((acc, node) => {
+          const incomers = getIncomers(node, nodes, edges);
+          const outgoers = getOutgoers(node, nodes, edges);
+          const connectedEdges = getConnectedEdges([node], edges);
+
+          const remainingEdges = acc.filter(
+            (edge) => !connectedEdges.includes(edge)
+          );
+
+          const createdEdges = incomers.flatMap(({ id: source }) =>
+            outgoers.map(({ id: target }) => ({
+              id: `${source}->${target}`,
+              source,
+              target,
+            }))
+          );
+
+          return [...remainingEdges, ...createdEdges];
+        }, edges)
+      );
+    },
+    [nodes, edges]
+  );
 
   return (
     <ReactFlow
@@ -115,6 +158,7 @@ export function Flow({
       edges={edges}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
+      onNodesDelete={onNodesDelete}
       nodeTypes={nodeTypes}
       edgeTypes={edgeTypes}
       onConnect={onConnect}
