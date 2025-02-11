@@ -1,81 +1,89 @@
+"use client";
 import * as React from "react";
-import { ReactNode } from "react";
+import { useState } from "react";
+import DynamicFrameLayout from "../app/components/DynamicFrameLayout";
+import { ppEditorialNewUltralightItalic, inter } from "./fonts/fonts";
+import Image from "next/image";
+import Link from "next/link";
 
 type Props = {
-  children?: ReactNode;
+  children: React.ReactNode;
 };
 
-export default ({ children }: Props) => {
+export default function HomePage() {
+  const [headerSize] = useState(1.2); // 120% is the default size
+  const [textSize] = useState(0.8); // 80% is the default size
+
   return (
-    <div className="p-6 gap-3">
-      <div>
-        <h1>Mindmap</h1>
-        <p>
-          Mindmap is an intuitive and powerful digital mind mapping tool
-          designed to help you visualize, organize, and develop your ideas with
-          ease. Whether you're brainstorming for a new project, planning your
-          next big venture, or simply trying to make sense of complex
-          information, Mindmap provides the perfect canvas for your thoughts.
-        </p>
-      </div>
-      <div>
-        <h2>Key Features</h2>
+    <div
+      className={`min-h-screen bg-[#141414] flex items-center justify-center p-8 ${ppEditorialNewUltralightItalic.variable} ${inter.variable}`}
+    >
+      <div className="w-full h-full flex flex-col md:flex-row items-start gap-8 md:gap-8">
+        <div className="w-full md:w-[260px] flex-shrink-0 flex flex-col justify-between h-full">
+          <div className="flex flex-col gap-16">
+            <h1
+              className={`${ppEditorialNewUltralightItalic.className} text-4xl md:text-6xl font-light italic text-white/80 tracking-tighter leading-[130%]`}
+              style={{ fontSize: `${4 * headerSize}rem` }}
+            >
+              Brand
+              <br />
+              Designer
+              <br />
+              at Luma?
+            </h1>
+            <div
+              className={`${inter.className} flex flex-col gap-12 text-white/50 text-sm font-light max-w-[300px]`}
+              style={{ fontSize: `${0.875 * textSize}rem` }}
+            >
+              <div className="space-y-6">
+                <div className="h-px bg-white/10 w-full" />
+                <p>
+                  Luma is looking to hire a multi-disciplinary Brand Designer to
+                  develop and maintain the brand identity and communicate the
+                  story of Luma to the world. Alongside members of the design
+                  team using product and research insights, you will help shape
+                  and define Luma's brand across product surfaces, social media,
+                  merchandise, marketing website, launch campaigns as well as
+                  other new channels.
+                </p>
+                <p>
+                  You will use a combination of graphic design, motion design,
+                  web design and video production/editing skills across
+                  traditional and innovative tools to communicate in visually
+                  compelling and impactful ways.
+                </p>
+                <p>Here are some of our favorite works so far.</p>
+                <div className="h-px bg-white/10 w-full" />
+              </div>
+            </div>
+            <Link
+              href="https://lumalabs.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-8 h-8 relative opacity-80 hover:opacity-100 transition-opacity"
+            >
+              <Image
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LumaLogo%201-MA3upjPymxFHKoHJgpdAUfZMeKGq3i.png"
+                alt="Luma Logo"
+                fill
+                className="object-contain"
+              />
+            </Link>
+          </div>
+          <a
+            href="https://lumalabs.ai/join?role=5d274587-f8fd-4f53-a5b6-8f85d586e1aa"
+            className="inline-block px-6 py-3 text-white/70 border border-white/20 rounded-full font-medium hover:bg-white/5 transition-colors text-center w-full max-w-[260px] text-sm mt-16"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Apply
+          </a>
+        </div>
 
-        <ul>
-          <li>
-            <strong>Intuitive Interface</strong>: Create and edit mind maps with
-            simple drag-and-drop functionality.
-          </li>
-          <li>
-            <strong>Flexible Node Types</strong>: Add text, images, links, and
-            custom icons to your nodes.
-          </li>
-          <li>
-            <strong>Real-time Collaboration</strong>: Work together with your
-            team in real-time, seeing changes as they happen.
-          </li>
-          <li>
-            <strong>Cross-platform Sync</strong>: Access your mind maps on any
-            device, with seamless syncing across desktop and mobile.
-          </li>
-          <li>
-            <strong>Smart Layout</strong>: Automatically organize your ideas
-            with intelligent layout algorithms.
-          </li>
-          <li>
-            <strong>Export Options</strong>: Share your mind maps in various
-            formats, including PDF, PNG, and interactive HTML.
-          </li>
-          <li>
-            <strong>Templates</strong>: Jump-start your brainstorming with a
-            variety of pre-designed templates.
-          </li>
-        </ul>
-      </div>
-
-      <div>
-        <h2>Why Mindmap?</h2>
-        <p>
-          Mindmap isn't just another note-taking app – it's a visual thinking
-          tool that helps you:
-        </p>
-        <ul>
-          <li>Clarify your thoughts and ideas</li>
-          <li>Identify connections between concepts</li>
-          <li>Improve memory and retention of information</li>
-          <li>Enhance creative problem-solving</li>
-          <li>Streamline project planning and management</li>
-        </ul>
-        <p>
-          Whether you're a student, professional, entrepreneur, or creative
-          thinker, Mindmap empowers you to unlock your full potential and bring
-          your ideas to life.
-        </p>
-        <p>
-          Get started with Mindmap today and transform the way you think, plan,
-          and create!
-        </p>
+        <div className="w-full md:flex-grow h-[60vh] md:h-[80vh]">
+          <DynamicFrameLayout />
+        </div>
       </div>
     </div>
   );
-};
+}
