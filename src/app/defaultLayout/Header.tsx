@@ -42,8 +42,8 @@ export default function Header() {
       <nav
         className="bg-white py-4 px-4 text-center max-lg:-py-4 max-lg:px-10 min-w-full max-w-full max-lg:flex max-lg:flex-col "
         style={{
-          backgroundColor: "#21D4FD",
-          backgroundImage: "linear-gradient(43deg, #70c1ff  0%, #FFF 100%)",
+          backgroundColor: "#70c1ff",
+          // backgroundImage: "linear-gradient(43deg, #70c1ff  0%, #FFF 100%)",
         }}
       >
         <div className="flex justify-between text-center px-4 min-w-full max-w-full">
@@ -121,12 +121,8 @@ export default function Header() {
               <Link
                 key={name}
                 href={link}
-                className={`mx-2 p-2 text-gray-700 text-xl rounded hover:bg-white hover:disabled:content-none
-                ${
-                  pathName === link
-                    ? "bg-indigo-400 text-gray-800 hover:bg-indigo-600"
-                    : ""
-                }`}
+                className={`mx-2 p-2 text-gray-700 text-xl rounded hover:text-indigo-600 hover:disabled:content-none
+                ${pathName === link ? "text-white" : ""}`}
               >
                 {name}
               </Link>
@@ -141,12 +137,12 @@ export default function Header() {
                     alt="user-img"
                   />
                 </span>
-                <a
+                <Link
                   href="/mindmap"
-                  className="mx-2 p-2 text-indigo-700 text-xl rounded hover:bg-indigo-200 "
+                  className="mx-2 p-2 text-indigo-700 text-xl rounded hover:text-indigo-200 "
                 >
                   mindmap
-                </a>
+                </Link>
                 <button
                   className="mx-2 p-2 text-xl text-indigo-700 rounded hover:bg-indigo-600 hover:text-white border border-indigo-700 "
                   onClick={() => signOut()}

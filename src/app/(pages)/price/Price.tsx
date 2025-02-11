@@ -8,7 +8,7 @@ import abs3 from "../../assets/image/price/abstract-3.jpg";
 import Image from "next/image";
 export default function Price() {
   return (
-    <div className="max-w-6xl my-16 mx-auto">
+    <div className="max-w-6xl my-16 mx-auto px-10">
       <div className="text-center">
         <h1 className="text-indigo-600 text-5xl text-bold mb-6">
           Flexible <span className="text-black">Plans</span>

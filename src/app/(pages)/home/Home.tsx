@@ -3,7 +3,7 @@ import mind from "../../assets/image/mind.webp";
 
 export default function Home() {
   return (
-    <div className="bg-indigo-100 py-6 md:py-12">
+    <div className="bg-gray-100 py-6 md:py-12">
       <div className="container px-4 mx-auto">
         <div className="heading text-center">
           <h1 className="text-3xl font-bold mb-2">

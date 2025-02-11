@@ -3,8 +3,8 @@ export default function Features() {
     <div
       className="py-4 px-6"
       style={{
-        backgroundColor: "#4158D0",
-        backgroundImage: "linear-gradient(43deg, #70c1ff  0%, #FFF 100%)",
+        backgroundColor: "white",
+        // backgroundImage: "linear-gradient(43deg, #70c1ff  0%, #FFF 100%)",
       }}
     >
       <div className="text-center xl:px-40 md:px-2">
@@ -30,8 +30,7 @@ export default function Features() {
             style={{
               border: "2px solid gray",
               backgroundColor: "#D9AFD9",
-              backgroundImage:
-                "linear-gradient(0deg, #D9AFD9 0%, #97D9E1 100%)",
+              backgroundImage: "linear-gradient(0deg, #70c1ff 0%, #FFF 100%)",
             }}
           >
             <svg
@@ -60,8 +59,7 @@ export default function Features() {
             style={{
               border: "2px solid gray",
               backgroundColor: "#D9AFD9",
-              backgroundImage:
-                "linear-gradient(0deg, #D9AFD9 0%, #97D9E1 100%)",
+              backgroundImage: "linear-gradient(0deg, #70c1ff 0%, #FFF 100%)",
             }}
           >
             <svg
@@ -89,8 +87,7 @@ export default function Features() {
             style={{
               border: "2px solid gray",
               backgroundColor: "#D9AFD9",
-              backgroundImage:
-                "linear-gradient(0deg, #D9AFD9 0%, #97D9E1 100%)",
+              backgroundImage: "linear-gradient(0deg, #70c1ff 0%, #FFF 100%)",
             }}
           >
             <svg

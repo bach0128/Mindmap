@@ -33,11 +33,11 @@ export default function Contact() {
         />
         <textarea
           className={style.input}
-          cols="30"
-          rows="10"
+          cols={30}
+          rows={10}
           placeholder="Write your message"
         ></textarea>
-        <button className="m-3 w-full h-10 bg-purple-500 hover:bg-purple-800 hover:text-white">
+        <button className="mt-3 w-full h-10 hover:bg-indigo-800 hover:text-white border border-black rounded">
           Send Message
         </button>
       </form>
